@@ -36,7 +36,7 @@ class RefillEvent(Event):
 
 
 class ShopProductEvent(Event):
-    def __init__(self, current_time: float, interval: float, index: int, cant: int, price: float, post_action: Callable[[InventoryState, Event], None]) -> None:
+    def __init__(self, current_time: float, interval: float, index: int, cant: int, price: float, post_action: Callable[[float, InventoryState, List[Event]], None]) -> None:
         super().__init__(interval+current_time, interval)
         self.index: int = index
         self.cant: int = cant
@@ -48,17 +48,17 @@ class ShopProductEvent(Event):
             state.remove_cant(self.index, self.cant)
             state.add_money(self.price*self.cant)
 
-        self.post_action(state, events)
+        self.post_action(self.time, state, events)
 
 
 class InventoryConfig:
-    def __init__(self, price: float, parameter_s: int, parameter_S: int, refill_interval: float, cost_refill: Callable[[int, float], float], cost_inventory: Callable[[int], float]) -> None:
+    def __init__(self, price: float, parameter_s: int, parameter_S: int, refill_interval: float, cost_refill: Callable[[int], float], cost_inventory: Callable[[int, float], float]) -> None:
         self.parameter_s: int = parameter_s
         self.parameter_S: int = parameter_S
         self.price = price
         self.refill_interval: float = refill_interval
         self.cost_refill: Callable[[int], float] = cost_refill
-        self.cost_inventory: Callable[[int], float] = cost_inventory
+        self.cost_inventory: Callable[[int, float], float] = cost_inventory
 
 
 class ActionByTimeInventory(ActionByTime):

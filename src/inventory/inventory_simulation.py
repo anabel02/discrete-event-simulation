@@ -9,9 +9,9 @@ def generate_events(index: int, time: float, time_dist: Callable[[], None], cant
     current = 0
     events = []
 
-    def post_action(state: State, events: List[Event]):
+    def post_action(time: float, state: State, events: List[Event]):
         if state.cants[index] < config.parameter_s:
-            heappush(events, RefillEvent(current, config.refill_interval, index, config.parameter_S -
+            heappush(events, RefillEvent(time, config.refill_interval, index, config.parameter_S -
                      state.cants[index], config.cost_refill(config.parameter_S - state.cants[index])))
 
     while current < time:
@@ -19,6 +19,8 @@ def generate_events(index: int, time: float, time_dist: Callable[[], None], cant
         current += interval
         events.append(ShopProductEvent(current, interval, index,
                       cant_dist(), config.price, post_action))
+
+    return events
 
 
 def configure(time: float, time_dist: Callable[[], None], configs: List[InventoryConfig], cant_dists: List[Callable[[], None]]) -> List[Event]:

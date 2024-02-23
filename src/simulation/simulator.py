@@ -12,7 +12,7 @@ def simulation(events: List[Event], actionByTime: ActionByTime, state: State, ti
         if event.time > time:
             break
 
-        event.append(history)
+        history.append(event)
 
         event.action(state, events)
         actionByTime.action(event.interval, state)
