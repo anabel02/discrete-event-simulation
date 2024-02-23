@@ -1,28 +1,16 @@
-# import numpy as np
+from inventory.inventory_simulation import InventoryConfig, inventory_simulation
+import numpy as np
 
-# def simular_eventos_poisson(T, lambda_):
-#     num_eventos = np.random.poisson(lambda_ * T)
-#     tiempos_eventos = np.random.uniform(0, T, num_eventos)
-#     tiempos_eventos.sort()
+config1=InventoryConfig(10, 10, 100, 10, lambda x: 10*x, lambda x: 10*x)
+config2=InventoryConfig(20, 10, 100, 10, lambda x: 10*x, lambda x: 4*x)
 
-    
-#     for tiempo in tiempos_eventos:
-#         print(f"Evento ocurre en el tiempo: {tiempo}")
+# dist1=np.random.normal(10, 1)
 
-#     print(len(tiempos_eventos))
+# initial_cants=[100, 100]
+# initial_money=10
 
-# # Ejemplo de uso
-# T =  10  # Período de tiempo en unidades de tiempo
-# lambda_ =  2  # Tasa de eventos por unidad de tiempo
-# simular_eventos_poisson(T, lambda_)
+# time=1000
 
+# inventory_simulation(time, lambda: , [config1, config2], [lambda: 10, lambda: 10], initial_cants, initial_money)
 
-from heapq import heapify,heappop,heappush
-
-l=[2,23,-2,2,3,5,6,7]
-
-print('a')
-heapify(l)
-print(l)
-while l:
-    print(heappop(l))
+# print(np.random.normal(10))

@@ -3,12 +3,18 @@ from heapq import heappop
 from typing import List
 
 
-def simulation(events: List[Event], actionByTime: ActionByTime, state: State, time: float):
+def simulation(events: List[Event], actionByTime: ActionByTime, state: State, time: float) -> List[Event]:
+    history = []
+
     while events:
         event = heappop(events)
 
         if event.time > time:
             break
 
+        event.append(history)
+
         event.action(state, events)
         actionByTime.action(event.interval, state)
+
+    return history
