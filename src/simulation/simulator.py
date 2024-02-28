@@ -10,6 +10,9 @@ def simulation(events: List[Event], actionByTime: ActionByTime, state: State, ti
     while events:
         event = heappop(events)
 
+        if stop_case(state):
+            break
+
         if event.time > time:
             break
 
