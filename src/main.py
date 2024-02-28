@@ -8,19 +8,21 @@ s_product1 = 7
 s_product2 = 5
 
 S_product1 = 100
-S_product2 = 70
+S_product2 = 200
 
 refill_interval_product1 = 10
 refill_interval_product2 = 7
 
-refill_cost_product1 = lambda x: 10*x
-refill_cost_product2 = lambda x: 6*x
+refill_cost_product1 = lambda product_cant: 10 * product_cant
+refill_cost_product2 = lambda product_cant: 6 * product_cant
 
-inventory_cost_product1 = lambda x, y: 10*x*y
-inventory_cost_product2 = lambda x, y: 4*x*y
+inventory_cost_product1 = lambda product_cant, y: product_cant * y
+inventory_cost_product2 = lambda product_cant, y: product_cant * y
 
-config_product1 = InventoryConfig(price_product1, s_product1, S_product1, refill_interval_product1, refill_cost_product1, inventory_cost_product1)
-config_product2 = InventoryConfig(price_product2, s_product2, S_product2, refill_interval_product2, refill_cost_product2, inventory_cost_product2)
+config_product1 = InventoryConfig(price_product1, s_product1, S_product1, refill_interval_product1,
+                                  refill_cost_product1, inventory_cost_product1)
+config_product2 = InventoryConfig(price_product2, s_product2, S_product2, refill_interval_product2,
+                                  refill_cost_product2, inventory_cost_product2)
 configs = [config_product1, config_product2]
 
 demand_dist_product1 = lambda: np.random.randint(1, 10)
@@ -37,6 +39,12 @@ time_dist = lambda: np.random.exponential(8)
 
 initial_money = 300
 
+stop_case = lambda system_state: system_state.money < 0
 
-inventory_simulation(max_time, time_dist, configs, demand_dists, initial_cants, initial_money)
+simulation_history, state = inventory_simulation(max_time, time_dist, configs, demand_dists, initial_cants,
+                                                 initial_money, stop_case)
 
+for x in simulation_history:
+    print(x.time, x.interval)
+
+print(state.money_history)
