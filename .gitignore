@@ -396,3 +396,29 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+
+# Ignora archivos de compilación LaTeX
+*.aux
+*.bbl
+*.blg
+*.log
+*.out
+*.toc
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+
+# Ignora archivos de salida (PDF)
+*.pdf
+
+# Ignora archivos temporales de editores de texto
+*.swp
+*.swo
+*.bak
+*.tmp
+
+# Ignora directorios de compilación
+_minted-*
+
+# Ignora archivos de configuración local
+.latexmkrc
